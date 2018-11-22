@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/fireworks.dir/fireworks.cpp.o  -o fireworks -Wl,-rpath,/Library/Frameworks ../libge211.a -framework SDL2 -framework Cocoa -framework SDL2_image -framework SDL2_ttf 
