@@ -36,6 +36,8 @@ namespace hexapawn {
         /// Converts a physical screen position to a logical board position.
         ge211::Position screen_to_board(ge211::Position) const;
 
+        //Todo: Add code that displays "Game Over"+str(winner) when the game is over.
+
     private:
         /// The model.
         Model const& m_model;

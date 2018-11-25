@@ -162,6 +162,7 @@ namespace hexapawn {
             m_winner = Player::first;
             m_turn = Player::neither;}
         else if (!p1_hasmoves_p  && !p2_hasmoves_p) {
+            // FixMe: No idea why this is saying the condition is always true
             m_winner = Player::neither;
             m_turn = Player::neither;}
         // A player has yet to win and so the game can continue => next player turn
