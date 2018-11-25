@@ -70,11 +70,11 @@ namespace hexapawn {
 
         //The more general case
         if ((new_col_no == viable_left_kill.x) && (new_row_no == viable_left_kill.y)) {
-            if (old_col_no == 0) return false; //Can't move left if all the way at the left
-            return (player_at_left == other_player); //Kill move only if another player is at position
+            if (old_col_no == 0) return false; //Can't move left from a pawn that is all the way at the left
+            return (player_at_left == other_player); //Can perform a kill move only if another player pawn is at position
         } else if ((new_col_no == viable_right_kill.x) && (new_row_no == viable_right_kill.y)) {
-            if (old_col_no == width() - 1) return false; //Can't move right if all the way at the right
-            return (player_at_right == other_player);//Kill move only if another player is at position
+            if (old_col_no == width() - 1) return false; //Can't move left from a pawn  if all the way at the right
+            return (player_at_right == other_player);//Kill move only if another player pawn is at position
         } else {
             return (player_at_no_kill == Player::neither); //Only move forward if no pawn is at position
         }
@@ -125,7 +125,8 @@ namespace hexapawn {
         ge211::Position pos(-1,-1);
         Player player;
 
-        // Loop through grid entries and check if a player has moves available
+        // Loop through grid entries and check if a player has moves available or if a pawn has reached
+        // the other side.
         for (int row_no = 0; row_no < height(); ++row_no) {
             for (int col_no = 0; col_no < width(); ++col_no) {
                 pos = {col_no,row_no};
@@ -163,7 +164,7 @@ namespace hexapawn {
         else if (!p1_hasmoves_p  && !p2_hasmoves_p) {
             m_winner = Player::neither;
             m_turn = Player::neither;}
-        // No one has one yet and the game can continue. Next player
+        // A player has yet to win and so the game can continue => next player turn
         else{
             m_turn = (get_turn() == Player::first) ? Player::second : Player::first;
         }

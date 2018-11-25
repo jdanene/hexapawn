@@ -7,7 +7,7 @@
 namespace hexapawn {
 
 
-    //How we represent players of the absence thereof.
+    ///How we represent players of the absence thereof.
     enum class Player
     {
         first, second, neither
@@ -40,10 +40,10 @@ namespace hexapawn {
         /// Checks if there is a pawn at the position.
         bool pawn_there_p(ge211::Position) const;
 
-        /// Is the move viable or not? Checks the preconditions of the game
+        /// Is the move from old_pos => new_pos viable or not? Checks the preconditions of the game
         bool is_viable_p(ge211::Position old_pos, ge211::Position new_pos, Player whose_turn) const;
 
-        /// Places the pawn from old_pos to new_pos. and updates the winner and turn
+        /// Places the pawn from old_pos to new_pos.
         void place_pawn(ge211::Position old_pos, ge211::Position new_pos);
 
         /// Returns whose turn it is, or Player::neither for game over.
@@ -62,7 +62,7 @@ namespace hexapawn {
         // Private helpers:
         //
 
-        /// Updates winner if there is one and updates the turn as well.
+        /// Updates winner if there is one and updates the turn as well. This function also enforces the invariant
         void update_winner_and_turn();
 
     private:

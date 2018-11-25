@@ -82,4 +82,4 @@ namespace hexapawn {
                 2 * pawn_radius * m_model.height()};
     }
 
-} // end namespace connect4
+} // end namespace hexapawn

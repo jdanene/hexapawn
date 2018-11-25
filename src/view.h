@@ -36,13 +36,11 @@ namespace hexapawn {
         /// Converts a physical screen position to a logical board position.
         ge211::Position screen_to_board(ge211::Position) const;
 
-        ///To do rotate_matrix
-
     private:
         /// The model.
         Model const& m_model;
 
-        /// The sprites.
+        /// The sprites
         ge211::Circle_sprite const m_player1_pawn{pawn_radius, p1_color};
         ge211::Circle_sprite const m_player2_pawn{pawn_radius, p2_color};
         ge211::Rectangle_sprite const m_ivory_square{{2*pawn_radius,2*pawn_radius}, ivory};
@@ -50,7 +48,7 @@ namespace hexapawn {
         ge211::Circle_sprite const m_p1PawnNoMove{pawn_radius, first_move_color};
         ge211::Circle_sprite const m_p2PawnNoMove{pawn_radius, second_move_color};
 
-        /// Vector that holds the two background images
+        /// Vector that holds the two background images used to create a checkered board
         std::vector<ge211::Rectangle_sprite> m_background_vec{m_ivory_square, m_brown_square};
 
     };

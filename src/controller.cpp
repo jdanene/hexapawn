@@ -37,7 +37,7 @@ namespace hexapawn {
         // Basically this clause happens if the game is over
         if (m_model.get_turn() == Player::neither) return;
 
-        // The left mouse button corresponds to pthe mouse pad.
+        // The left mouse button corresponds to the mouse pad.
         if (btn != Mouse_button::left) return;
 
         Position board_pos = m_view.screen_to_board(screen_posn);
@@ -69,13 +69,13 @@ namespace hexapawn {
 
         // State Transition: New Turn, Check Winner, New Board Arrangement
         if (board_pos.x < m_model.width() && board_pos.y < m_model.height()) {
-            //Move the selected pawn to the new position.
+            //Update the grid/board game state by moving the selected pawn to the new position.
             m_model.place_pawn(m_selected_pawn.pos,board_pos);
-            //Update the rest of the game states
+            //Update the rest of the game states: turn, winner
             m_model.update_winner_and_turn();
         }
 
-        //Update indicator to signify that there is no pawn currently selected.
+        //Update indicator to signify that there isn't a pawn currently selected.
         m_selected_pawn.selected_p = false;
 
     }
