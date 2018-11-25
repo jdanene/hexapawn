@@ -429,6 +429,12 @@
 		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/.ipd/lib/ge211/src/ge211_window.h">
 			<Option target="ge211"/>
 		</Unit>
+		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/src/controller.cpp">
+			<Option target="hexapawn"/>
+		</Unit>
+		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/src/controller.h">
+			<Option target="hexapawn"/>
+		</Unit>
 		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/src/hexapawn.cpp">
 			<Option target="hexapawn"/>
 		</Unit>
@@ -439,6 +445,12 @@
 		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/src/model.h">
 			<Option target="hexapawn"/>
 			<Option target="model_test"/>
+		</Unit>
+		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/src/view.cpp">
+			<Option target="hexapawn"/>
+		</Unit>
+		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/src/view.h">
+			<Option target="hexapawn"/>
 		</Unit>
 		<Unit filename="/Users/dominicanene/Google Drive/Nortwestern /2018-2019/EECS 295/hexapawn/test/model_test.cpp">
 			<Option target="model_test"/>

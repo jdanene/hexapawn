@@ -186,6 +186,33 @@ fireworks/fast:
 	$(MAKE) -f .ipd/lib/ge211/examples/CMakeFiles/fireworks.dir/build.make .ipd/lib/ge211/examples/CMakeFiles/fireworks.dir/build
 .PHONY : fireworks/fast
 
+src/controller.o: src/controller.cpp.o
+
+.PHONY : src/controller.o
+
+# target to build an object file
+src/controller.cpp.o:
+	$(MAKE) -f CMakeFiles/hexapawn.dir/build.make CMakeFiles/hexapawn.dir/src/controller.cpp.o
+.PHONY : src/controller.cpp.o
+
+src/controller.i: src/controller.cpp.i
+
+.PHONY : src/controller.i
+
+# target to preprocess a source file
+src/controller.cpp.i:
+	$(MAKE) -f CMakeFiles/hexapawn.dir/build.make CMakeFiles/hexapawn.dir/src/controller.cpp.i
+.PHONY : src/controller.cpp.i
+
+src/controller.s: src/controller.cpp.s
+
+.PHONY : src/controller.s
+
+# target to generate assembly for a file
+src/controller.cpp.s:
+	$(MAKE) -f CMakeFiles/hexapawn.dir/build.make CMakeFiles/hexapawn.dir/src/controller.cpp.s
+.PHONY : src/controller.cpp.s
+
 src/hexapawn.o: src/hexapawn.cpp.o
 
 .PHONY : src/hexapawn.o
@@ -243,6 +270,33 @@ src/model.cpp.s:
 	$(MAKE) -f CMakeFiles/model_test.dir/build.make CMakeFiles/model_test.dir/src/model.cpp.s
 .PHONY : src/model.cpp.s
 
+src/view.o: src/view.cpp.o
+
+.PHONY : src/view.o
+
+# target to build an object file
+src/view.cpp.o:
+	$(MAKE) -f CMakeFiles/hexapawn.dir/build.make CMakeFiles/hexapawn.dir/src/view.cpp.o
+.PHONY : src/view.cpp.o
+
+src/view.i: src/view.cpp.i
+
+.PHONY : src/view.i
+
+# target to preprocess a source file
+src/view.cpp.i:
+	$(MAKE) -f CMakeFiles/hexapawn.dir/build.make CMakeFiles/hexapawn.dir/src/view.cpp.i
+.PHONY : src/view.cpp.i
+
+src/view.s: src/view.cpp.s
+
+.PHONY : src/view.s
+
+# target to generate assembly for a file
+src/view.cpp.s:
+	$(MAKE) -f CMakeFiles/hexapawn.dir/build.make CMakeFiles/hexapawn.dir/src/view.cpp.s
+.PHONY : src/view.cpp.s
+
 test/model_test.o: test/model_test.cpp.o
 
 .PHONY : test/model_test.o
@@ -284,12 +338,18 @@ help:
 	@echo "... catch"
 	@echo "... ge211"
 	@echo "... fireworks"
+	@echo "... src/controller.o"
+	@echo "... src/controller.i"
+	@echo "... src/controller.s"
 	@echo "... src/hexapawn.o"
 	@echo "... src/hexapawn.i"
 	@echo "... src/hexapawn.s"
 	@echo "... src/model.o"
 	@echo "... src/model.i"
 	@echo "... src/model.s"
+	@echo "... src/view.o"
+	@echo "... src/view.i"
+	@echo "... src/view.s"
 	@echo "... test/model_test.o"
 	@echo "... test/model_test.i"
 	@echo "... test/model_test.s"
