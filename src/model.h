@@ -4,6 +4,7 @@
 #include <ge211.h>
 #include <cmath>
 
+
 namespace hexapawn {
 
 
@@ -13,11 +14,8 @@ namespace hexapawn {
         first, second, neither
     };
 
-
-    /*
-     * Models a hexapawn game. There parameters are `width' the width of the board,
-     * `height' the height of the board.
-    */
+     // Models a hexapawn game. There parameters are `width' the width of the board,
+     // `height' the height of the board.
     class Model
     {
     public:
@@ -87,10 +85,9 @@ namespace hexapawn {
         bool feasible_moves_p(ge211::Position pos, Player p) const;
     };
 
-    }
-
-
-
-
-
 }
+
+
+
+
+

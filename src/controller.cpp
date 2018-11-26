@@ -1,10 +1,10 @@
-#include <controller.h>
+#include "controller.h"
 using namespace ge211;
 
 
 namespace hexapawn {
 
-    Controller::Controller(size_t width, size_t height)
+    Controller::Controller(int width, int height)
             : m_model(width, height)
             , m_view(m_model)
             , m_mouse_position(-1,-1)

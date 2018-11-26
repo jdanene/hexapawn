@@ -1,18 +1,13 @@
 #pragma once
 #include <ge211.h>
-#include <model.h>
-#include <view.h>
+#include "model.h"
+#include "view.h"
 
 /// Main function is to advance the state-space
 
 namespace hexapawn {
 
-    //Current Pawns selected
-    struct PawnSelect{
-        ge211::Position pos;
-        bool selected_p;
 
-    };
 
     // Inheriting the abstract_game class into the contoller.
     class Controller : public ge211::Abstract_game
@@ -21,7 +16,7 @@ namespace hexapawn {
         // Constructor for the controller. This M-V-C model is contrary to connect4
         // The controller gets in data and sends it to the model only. The controller
         // can view the data from the view but can not change it.
-        explicit Controller(size_t width = 3, size_t height = 3);
+        explicit Controller(int width = 3, int height = 3);
 
     protected:
         /* In graphics the origin is at the upper left. x-corr increase to right and

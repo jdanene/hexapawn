@@ -1,9 +1,14 @@
 #pragma once
-#include <model.h>
+#include "model.h"
 #include <ge211.h>
-#include <controller.h>
 
 namespace hexapawn {
+    ///Current Pawns selected
+    struct PawnSelect{
+        ge211::Position pos;
+        bool selected_p;
+
+    };
 
 // The radius of each rendered token.
     int const pawn_radius = 50;
