@@ -54,7 +54,7 @@ namespace hexapawn {
         int row = mouse_position.y;
         if (pawn_select.selected_p){
             if (row < m_model.height() && col < m_model.width()) {
-                auto const& sprite = (m_model.get_turn() == Player::first) ? m_player1_pawn : m_player2_pawn;
+                auto const& sprite = (m_model.get_turn() == Player::first) ? p1_pawn : p2_pawn;
                 sprites.add_sprite(sprite, board_to_screen({col, row}), 2);
             }
 

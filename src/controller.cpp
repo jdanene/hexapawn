@@ -42,15 +42,17 @@ namespace hexapawn {
 
         Position board_pos = m_view.screen_to_board(screen_posn);
 
-        //If the selected pawn is in the bounds of the game then process it.
-        if (board_pos.y < m_model.height() && board_pos.x < m_model.width()) {
-            // Can only select a pawn if there is a pawn at the selected position.
-            if (m_model.pawn_there_p(board_pos))
-            {
-                //Store the selected pawn
-                m_selected_pawn.pos = board_pos;
-                //Indicate a pawn has been selected
-                m_selected_pawn.selected_p = true;
+        // Can only select a pawn that corresponds to the current turn
+        if (m_model.get_turn() ==  m_model.get_ele(board_pos)) {
+            //If the selected pawn is in the bounds of the game then process it.
+            if (board_pos.y < m_model.height() && board_pos.x < m_model.width()) {
+                // Can only select a pawn if there is a pawn at the selected position.
+                if (m_model.pawn_there_p(board_pos)) {
+                    //Store the selected pawn
+                    m_selected_pawn.pos = board_pos;
+                    //Indicate a pawn has been selected
+                    m_selected_pawn.selected_p = true;
+                }
             }
         }
     }
