@@ -8,14 +8,15 @@ namespace hexapawn {
     { }
 
 
+
+
     void View::draw(ge211::Sprite_set& sprites, ge211::Position mouse_position, PawnSelect pawn_select) const
     {
         //Parameters
-        size_t len = m_background_vec.size();
+        auto len = m_background_vec.size();
         int idx = -1;
         Player current_player = m_model.get_turn();
-        ge211::Circle_sprite p1_pawn = (current_player == Player::first) ?  m_player1_pawn : m_p1PawnNoMove;
-        ge211::Circle_sprite p2_pawn = (current_player == Player::second) ?  m_player2_pawn : m_p2PawnNoMove;
+        //FixMe: Code is especially clunky to get around errors from ge211
 
         // Adding pawns to board and make the board checkered.
         // Differentiate opaqueness so that players know whose turn it is.
@@ -24,27 +25,37 @@ namespace hexapawn {
                 Player player = m_model.get_ele({col_no,row_no});
 
                 // We treat Player::neither as empty space
-                if (player != Player::neither)
-                {
-                    //Conditions for a pawn that has been selected. If selected aka (pawn_select.selected_p == t)
-                    // then don't draw, otherwise we draw since (pawn_select.selected_p == f) means a pawn has not been selected.
-                    if ((pawn_select.pos.x == col_no) && (pawn_select.pos.y == row_no)){
-                        if (!pawn_select.selected_p)
-                        {
-                            auto const& sprite = (player == Player::first) ? p1_pawn : p2_pawn;
+                if (Player::neither != player) {
+                    if (!pawn_select.selected_p) {
+                        if (player == Player::first) {
+                            auto const &sprite =
+                                    player == current_player ? m_player1_pawn : m_p1PawnNoMove;
+                            sprites.add_sprite(sprite, board_to_screen({col_no, row_no}), 1);
+                        } else {
+                            auto const &sprite =
+                                    player == current_player ? m_player2_pawn : m_p2PawnNoMove;
                             sprites.add_sprite(sprite, board_to_screen({col_no, row_no}), 1);
                         }
-                    }
-                    else{
-                        auto const& sprite = (player == Player::first) ? p1_pawn : p2_pawn;
-                        sprites.add_sprite(sprite, board_to_screen({col_no, row_no}), 1);
+                    } else if ((pawn_select.pos.x != col_no) or (pawn_select.pos.y != row_no)) {
+                        if (player == Player::first) {
+                            auto const& sprite =
+                                    player == current_player ? m_player1_pawn : m_p1PawnNoMove;
+                            sprites.add_sprite(sprite, board_to_screen({col_no, row_no}), 1);
+                        } else {
+                            auto const& sprite =
+                                    player == current_player ? m_player2_pawn : m_p2PawnNoMove;
+                            sprites.add_sprite(sprite, board_to_screen({col_no, row_no}), 1);
+                        }
                     }
                 }
                 // Add ivory and brown squares to the board to make it checkered.
                 // Using modulo so every other turn we add:
                 // m_ivory_square => m_brown_square => m_ivory_square => m_brown_square ...
                 ++idx;
-                sprites.add_sprite(m_background_vec[idx%len], board_to_screen({col_no, row_no}), 0);
+                //std::cout << "Curr idx Player turn is: "<< idx%len << "\n";
+                //std::cout << "Curr x,y Player turn is: "<< col_no <<","<< row_no <<"\n";
+
+                sprites.add_sprite(m_background_vec.at(idx%len), board_to_screen({col_no, row_no}), 0);
             }
         }
 
@@ -53,11 +64,9 @@ namespace hexapawn {
         int col = mouse_position.x;
         int row = mouse_position.y;
         if (pawn_select.selected_p){
-            if (row < m_model.height() && col < m_model.width()) {
-                auto const& sprite = (m_model.get_turn() == Player::first) ? p1_pawn : p2_pawn;
-                sprites.add_sprite(sprite, board_to_screen({col, row}), 2);
+            if (m_model.bounds_check(mouse_position)) {
+                sprites.add_sprite(current_player == Player::first ? m_player1_pawn : m_player2_pawn, board_to_screen({col, row}), 2);
             }
-
         }
     }
 

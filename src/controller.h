@@ -7,8 +7,6 @@
 
 namespace hexapawn {
 
-
-
     // Inheriting the abstract_game class into the contoller.
     class Controller : public ge211::Abstract_game
     {

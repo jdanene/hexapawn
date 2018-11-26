@@ -3,6 +3,8 @@
 #include <cassert>
 #include <ge211.h>
 #include <cmath>
+#include <vector>
+#include <iostream>
 
 
 namespace hexapawn {
@@ -13,6 +15,15 @@ namespace hexapawn {
     {
         first, second, neither
     };
+
+    // as_integer: enumeration -> int
+    // So we can test the underlying int value of our Player enumeration class
+    template <typename Enumeration>
+    auto as_integer(Enumeration const value)
+    -> typename std::underlying_type<Enumeration>::type
+    {
+        return static_cast<typename std::underlying_type<Enumeration>::type>(value);
+    }
 
      // Models a hexapawn game. There parameters are `width' the width of the board,
      // `height' the height of the board.
@@ -38,30 +49,56 @@ namespace hexapawn {
         /// Checks if there is a pawn at the position.
         bool pawn_there_p(ge211::Position) const;
 
-        /// Is the move from old_pos => new_pos viable or not? Checks the preconditions of the game
-        bool is_viable_p(ge211::Position old_pos, ge211::Position new_pos, Player whose_turn) const;
-
-        /// Places the pawn from old_pos to new_pos.
-        void place_pawn(ge211::Position old_pos, ge211::Position new_pos);
-
         /// Returns whose turn it is, or Player::neither for game over.
         const Player& get_turn() const { return m_turn; };
 
-        ///Return the winner, or Player::neither  for stalemates or when the game is not over yet.
-        //const Player& game_over() const { return m_winner; };
+        ///Check if coordinates within bounds
+        bool bounds_check(ge211::Position) const;
 
-        /* **********************************************************************
-         ************************ Game Invariant ********************************
-         *  Invariant 1 - If a player has no moves then that player loses and the other player wins
-         *  Invariant 2 - If both players have no moves then neither player win
-         *  Invariant 3 - If a player gets a pawn to the other side then that player wins
-         * **********************************************************************/
-        //
-        // Private helpers:
-        //
+        /// Returns the winner of game is there is one
+        const Player& game_over() const { return m_winner; };
 
-        /// Updates winner if there is one and updates the turn as well. This function also enforces the invariant
+        /********************* (Invariant 1) Player Wins/Game Over Invariant ***********************
+         *  game_over[1] - If a player has no valid moves then that player loses and the other player wins
+         *  game_over[2] - If both players have no moves then neither player win
+         *  game_over[3]- If a player gets a pawn to the other side then that player wins
+         *******************************************************************************************/
+        // FixMe: Switch to private at submit
+        /// Returns true if there is at-least one feasible move for the pawn `p` located at `pos`
+        // Aux function for `update_winner_and_turn`, helps enforce (Invariant 1)::game_over[1] && (Invariant 1)::game_over[2]
+        bool feasible_moves_p(ge211::Position pos, Player p) const;
+        /**************** (Invariant 2) Player Turn Invariant ***************************************
+         * - If the game is not over
+         *      -Then after a player enacts a valid pawn move then it is the other players turn.
+         * - Else
+         *      - Neither player has a turn
+         ********************************************************************************************/
+
+        /// Updates winner if there is one and updates the turn as well.
+        // Enforces (Invariant 1) & (Invariant 2)
         void update_winner_and_turn();
+
+        /********************** (Invariant 3) Player/Pawn Move Invariant *****************************
+         * Valid Pawn moves
+         *      - capture a pawn one square diagonally to the left
+         *      - capture a pawn one square diagonally to the right
+         *      - move pawn one square forward
+         * Invalid Pawn moves
+         *      - All moves not specified as valid.
+         * ********************************************************************************************/
+        //FixMe: Switch this back before you submit
+        /// Returns true if a move is viable for a specified player.
+        //  Aux function for `is_viable_p`
+        bool player_move_goodp(ge211::Position old_pos, ge211::Position new_pos,Player whose_turn,\
+        int (*pm)(int, int)) const;
+
+        /// Is the move from old_pos => new_pos viable or not?
+        // Checks the conditions of (Invariant 3)
+        bool is_viable_p(ge211::Position old_pos, ge211::Position new_pos, Player whose_turn) const;
+
+        /// Places the pawn from old_pos to new_pos.
+        //Enforces (Invariant 3)
+        void place_pawn(ge211::Position old_pos, ge211::Position new_pos);
 
     private:
         ///The game parameters
@@ -77,12 +114,6 @@ namespace hexapawn {
         /// The winning player, if any
         Player m_winner = Player::neither;
 
-        /// Aux function for `is_viable_p` returns true or false if a move is viable for a specific player.
-        bool player_move_goodp(ge211::Position old_pos, ge211::Position new_pos,\
-        int (*pm)(int, int),bool (*ineq)(int, int)) const;
-
-        /// Returns true if there exits a feasible move for the pawn `p` located at `pos`
-        bool feasible_moves_p(ge211::Position pos, Player p) const;
     };
 
 }
