@@ -13,7 +13,12 @@ namespace hexapawn {
 
     void Controller::draw(Sprite_set& set)
     {
-        m_view.draw(set, m_mouse_position, m_selected_pawn);
+        if (m_model.game_over_p()){
+           m_view.drawGameOver(set);
+        } else{
+            m_view.draw(set, m_mouse_position, m_selected_pawn);
+        }
+
     }
 
 

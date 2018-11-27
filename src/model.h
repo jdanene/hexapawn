@@ -50,7 +50,7 @@ namespace hexapawn {
         ///Check if coordinates within bounds
         bool bounds_check(ge211::Position) const;
 
-         /// Returns the winner of game if there is one
+         /// Returns true if game is over
          bool game_over_p() const { return (Player::neither == m_turn) ; };
 
         /********************* (Invariant 1) Player Wins/Game Over Invariant ***********************

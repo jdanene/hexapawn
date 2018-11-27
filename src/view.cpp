@@ -8,6 +8,48 @@ namespace hexapawn {
     { }
 
 
+    void View::drawGameOver(ge211::Sprite_set& sprites) const
+    {
+        //Parameters
+        auto len = m_background_vec.size();
+        int idx = -1;
+        Player current_player = m_model.get_turn();
+        //If m_model.height() or m_model.height()  are even then we are in the special case.
+        bool special_case_checkered = (not ((m_model.height()%2 == 1) && (m_model.height()%2 == 1))) ? true : false;
+        Player winner = m_model.game_winner();
+
+        // Put the game over sprite in the `left corner` of the board
+        sprites.add_sprite(m_gameover_vec[as_integer(winner)], board_to_screen({0 ,m_model.height()-1}), 3);
+
+        // Adding pawns to board and make the board checkered.
+        // Differentiate opaqueness so that players know whose turn it is.
+        for (int row_no = 0; row_no < m_model.height(); ++row_no) {
+            if ((special_case_checkered) && (row_no%2 == 1)){
+                ++idx;
+            }else if((special_case_checkered) && (row_no%2 == 0)){
+                --idx;
+            }
+            for (int col_no = 0; col_no < m_model.width(); ++col_no) {
+                Player player = m_model.get_ele({col_no,row_no});
+                // We treat Player::neither as empty space
+                if (Player::neither != player) {
+                        if (player == Player::first) {
+                            auto const &sprite =
+                                    player == current_player ? m_player1_pawn : m_p1PawnNoMove;
+                            sprites.add_sprite(sprite, board_to_screen({col_no, row_no}), 1);
+                        } else {
+                            auto const &sprite =
+                                    player == current_player ? m_player2_pawn : m_p2PawnNoMove;
+                            sprites.add_sprite(sprite, board_to_screen({col_no, row_no}), 1);
+                        }
+                }
+
+                ++idx;
+                sprites.add_sprite(m_background_vec.at(idx%len), board_to_screen({col_no, row_no}), 0);
+            }
+        }
+    }
+
     void View::draw(ge211::Sprite_set& sprites, ge211::Position mouse_position, PawnSelect pawn_select) const
     {
         //Parameters

@@ -44,6 +44,8 @@ namespace hexapawn {
         ge211::Position screen_to_board(ge211::Position) const;
 
         //Todo: Add code that displays "Game Over"+str(winner) when the game is over.
+        void drawGameOver(ge211::Sprite_set&) const;
+
 
     private:
         /// The model.
@@ -59,6 +61,32 @@ namespace hexapawn {
 
         /// Vector that holds the two background images used to create a checkered board
         std::vector<ge211::Rectangle_sprite> const m_background_vec{m_ivory_square,m_brown_square};
+
+        /// Font
+        ge211::Font sans{"sans.ttf", 27};
+
+        /// Game over sprites.
+        ge211::Text_sprite p1wins =
+                ge211::Text_sprite::Builder(sans)
+                        .message("Player 1 wins!")
+                        .color(ge211::Color::white())
+                        .build();
+
+        ge211::Text_sprite p2wins =
+                ge211::Text_sprite::Builder(sans)
+                        .message("Player 2 wins!")
+                        .color(ge211::Color::white())
+                        .build();
+
+        ge211::Text_sprite statemate =
+                ge211::Text_sprite::Builder(sans)
+                        .message(" Draw! ")
+                        .color(ge211::Color::white())
+                        .build();
+
+        std::vector<ge211::Text_sprite> const m_gameover_vec{p1wins,p2wins,statemate};
+
+
 
     };
 
