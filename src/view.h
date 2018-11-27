@@ -68,19 +68,19 @@ namespace hexapawn {
         /// Game over sprites.
         ge211::Text_sprite p1wins =
                 ge211::Text_sprite::Builder(sans)
-                        .message("Player 1 wins!")
+                        .message("White wins!")
                         .color(ge211::Color::white())
                         .build();
 
         ge211::Text_sprite p2wins =
                 ge211::Text_sprite::Builder(sans)
-                        .message("Player 2 wins!")
+                        .message("Black wins!")
                         .color(ge211::Color::white())
                         .build();
 
         ge211::Text_sprite statemate =
                 ge211::Text_sprite::Builder(sans)
-                        .message(" Draw! ")
+                        .message("Draw! ")
                         .color(ge211::Color::white())
                         .build();
 
