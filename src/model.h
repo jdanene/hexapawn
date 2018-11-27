@@ -1,10 +1,8 @@
 #pragma once
-#include <ge211.h>
 #include <cassert>
 #include <ge211.h>
 #include <cmath>
 #include <vector>
-#include <iostream>
 
 
 namespace hexapawn {
@@ -16,7 +14,7 @@ namespace hexapawn {
         first, second, neither
     };
 
-    // as_integer: enumeration -> int
+    // as_integer: enumeration -> number
     // So we can test the underlying int value of our Player enumeration class
     template <typename Enumeration>
     auto as_integer(Enumeration const value)
@@ -25,7 +23,7 @@ namespace hexapawn {
         return static_cast<typename std::underlying_type<Enumeration>::type>(value);
     }
 
-     // Models a hexapawn game. There parameters are `width' the width of the board,
+     // Models a hexapawn game. The parameters are `width' the width of the board,
      // `height' the height of the board.
     class Model
     {
@@ -33,7 +31,6 @@ namespace hexapawn {
         /*
          * Constructs a hexapawn-N-M game model. The default parameters give a standard
          * 3x3 hexapawn game. Otherwise:
-         *
          * \param `width' the width of the grid
          * \param `height' the height of the grid
         */
@@ -42,25 +39,19 @@ namespace hexapawn {
         ///Functions to get a view of private variables
         int width() const {return m_width; }
         int height() const {return m_height; }
-
-        ///Gets a view of a given element
-        const Player& get_ele(ge211::Position) const;
+        const Player& get_ele(ge211::Position) const; //Gets a view of a given element
+        const Player& get_turn() const { return m_turn; }; // Returns whose turn it is, or Player::neither if game over.
+        //ToDo: If we decide to include text that indicates game is over + winner, then use this function
+        const Player& game_winner() const { return m_winner; }; // Returns the winner of game is there is one
 
         /// Checks if there is a pawn at the position.
         bool pawn_there_p(ge211::Position) const;
 
-        /// Returns whose turn it is, or Player::neither for game over.
-        const Player& get_turn() const { return m_turn; };
-
         ///Check if coordinates within bounds
         bool bounds_check(ge211::Position) const;
 
-        /// Returns the winner of game is there is one
-        const Player& game_winner() const { return m_winner; };
-
-         /// Returns the winner of game is there is one
+         /// Returns the winner of game if there is one
          bool game_over_p() const { return (Player::neither == m_turn) ; };
-
 
         /********************* (Invariant 1) Player Wins/Game Over Invariant ***********************
          *  game_over[1] - If a player has no valid moves then that player loses and the other player wins

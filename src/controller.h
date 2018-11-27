@@ -1,9 +1,7 @@
 #pragma once
-#include <ge211.h>
 #include "model.h"
 #include "view.h"
 
-/// Main function is to advance the state-space
 
 namespace hexapawn {
 

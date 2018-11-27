@@ -14,14 +14,21 @@ namespace hexapawn {
         auto len = m_background_vec.size();
         int idx = -1;
         Player current_player = m_model.get_turn();
+        bool special_case_checkered = (not ((m_model.height()%2 == 1) && (m_model.height()%2 == 1))) ? true : false;
+
+
         //FixMe: Code is especially clunky to get around errors from ge211
 
         // Adding pawns to board and make the board checkered.
         // Differentiate opaqueness so that players know whose turn it is.
         for (int row_no = 0; row_no < m_model.height(); ++row_no) {
+            if ((special_case_checkered) && (row_no%2 == 1)){
+                ++idx;
+            }else{
+                --idx;
+            }
             for (int col_no = 0; col_no < m_model.width(); ++col_no) {
                 Player player = m_model.get_ele({col_no,row_no});
-
                 // We treat Player::neither as empty space
                 if (Player::neither != player) {
                     if (!pawn_select.selected_p) {
@@ -49,10 +56,10 @@ namespace hexapawn {
                 // Add ivory and brown squares to the board to make it checkered.
                 // Using modulo so every other turn we add:
                 // m_ivory_square => m_brown_square => m_ivory_square => m_brown_square ...
-                ++idx;
+
                 //std::cout << "Curr idx Player turn is: "<< idx%len << "\n";
                 //std::cout << "Curr x,y Player turn is: "<< col_no <<","<< row_no <<"\n";
-
+                ++idx;
                 sprites.add_sprite(m_background_vec.at(idx%len), board_to_screen({col_no, row_no}), 0);
             }
         }

@@ -1,5 +1,4 @@
 #include "model.h"
-#include <iostream>
 
 using namespace ge211;
 
