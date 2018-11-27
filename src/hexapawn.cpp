@@ -4,7 +4,7 @@ int main()
 {
 
     {
-        hexapawn::Controller(4,7).run();
+        hexapawn::Controller(3,3).run();
     }
 }
 

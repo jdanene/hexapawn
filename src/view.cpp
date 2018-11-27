@@ -14,17 +14,17 @@ namespace hexapawn {
         auto len = m_background_vec.size();
         int idx = -1;
         Player current_player = m_model.get_turn();
+        //If m_model.height() or m_model.height()  are even then we are in the special case.
         bool special_case_checkered = (not ((m_model.height()%2 == 1) && (m_model.height()%2 == 1))) ? true : false;
 
 
         //FixMe: Code is especially clunky to get around errors from ge211
-
         // Adding pawns to board and make the board checkered.
         // Differentiate opaqueness so that players know whose turn it is.
         for (int row_no = 0; row_no < m_model.height(); ++row_no) {
             if ((special_case_checkered) && (row_no%2 == 1)){
                 ++idx;
-            }else{
+            }else if((special_case_checkered) && (row_no%2 == 0)){
                 --idx;
             }
             for (int col_no = 0; col_no < m_model.width(); ++col_no) {

@@ -60,7 +60,6 @@ namespace hexapawn {
         /// Vector that holds the two background images used to create a checkered board
         std::vector<ge211::Rectangle_sprite> const m_background_vec{m_ivory_square,m_brown_square};
 
-
     };
 
 } // end namespace connect4
