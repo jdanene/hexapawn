@@ -35,17 +35,17 @@ namespace hexapawn {
     void Controller::on_mouse_down(Mouse_button btn, Position screen_posn)
     {
         // Basically this clause happens if the game is over
-        if (m_model.get_turn() == Player::neither) return;
+        if (m_model.game_over_p()) return;
 
         // The left mouse button corresponds to the mouse pad.
         if (btn != Mouse_button::left) return;
 
         Position board_pos = m_view.screen_to_board(screen_posn);
 
-        // Can only select a pawn that corresponds to the current turn
-        if (m_model.get_turn() ==  m_model.get_ele(board_pos)) {
-            //If the selected pawn is in the bounds of the game then process it.
-            if (board_pos.y < m_model.height() && board_pos.x < m_model.width()) {
+        //If the selected pawn is in the bounds of the game then process it.
+        if (m_model.bounds_check(board_pos))  {
+            // Can only select a pawn that corresponds to the current turn
+            if (m_model.get_turn() ==  m_model.get_ele(board_pos)){
                 // Can only select a pawn if there is a pawn at the selected position.
                 if (m_model.pawn_there_p(board_pos)) {
                     //Store the selected pawn
@@ -66,8 +66,11 @@ namespace hexapawn {
 
         Position board_pos = m_view.screen_to_board(screen_posn);
 
-        //If the pawn is not viable do nothing
-        if (!m_model.is_viable_p(m_selected_pawn.pos,board_pos,m_model.get_turn())) return;
+        //If the pawn is not viable deselect then do nothing
+        if (!m_model.is_viable_p(m_selected_pawn.pos,board_pos,m_model.get_turn())){
+            m_selected_pawn.selected_p = false;
+            return;
+        }
 
         // State Transition: New Turn, Check Winner, New Board Arrangement
         if (board_pos.x < m_model.width() && board_pos.y < m_model.height()) {

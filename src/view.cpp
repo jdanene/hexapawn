@@ -8,8 +8,6 @@ namespace hexapawn {
     { }
 
 
-
-
     void View::draw(ge211::Sprite_set& sprites, ge211::Position mouse_position, PawnSelect pawn_select) const
     {
         //Parameters
@@ -74,6 +72,8 @@ namespace hexapawn {
     {
         int x = 2 * pawn_radius * board_pos.x;
         int y = 2 * pawn_radius * (m_model.height() - board_pos.y - 1);
+        //std::cout << "board_to_screen()"<<"{" <<board_pos.x << ","<< board_pos.y <<"}" << "\n";
+        //std::cout << "board_to_screen()"<<"{" <<x << ","<< y <<"}" << "\n";
         return {x, y};
     }
 
@@ -81,6 +81,8 @@ namespace hexapawn {
     {
         int col_no = screen_pos.x / (2 * pawn_radius);
         int row_no = m_model.height() - screen_pos.y / (2 * pawn_radius) - 1;
+        //std::cout << "screen_to_board()"<<"{" <<screen_pos.x << ","<< screen_pos.y <<"}" << "\n";
+        //std::cout << "board_to_screen()"<<"{" <<col_no << ","<< row_no <<"}" << "\n";
         return {col_no, row_no};
     }
 

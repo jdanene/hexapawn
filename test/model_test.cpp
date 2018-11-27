@@ -1,6 +1,6 @@
 #include <model.h>
 //#include <controller.h>
-//#include <view.h>
+#include <view.h>
 #include <catch.h>
 #include <iostream>
 
@@ -20,6 +20,20 @@ TEST_CASE("Check that defaults are correct")
     //Ensure that the middle row correspond to Player:: Neither
     CHECK(((hexapawn.get_ele({0,1}) == Player::neither) && (hexapawn.get_ele({4,1}) == Player::neither)));
     CHECK(((hexapawn.get_ele({0,6}) == Player::neither) && (hexapawn.get_ele({4,6}) == Player::neither)));
+}
+
+TEST_CASE("Test view")
+{
+    Controller hexapawn(3,3);
+    View h_view(hexapawn);
+    /// Converts a logical board position to a physical screen position.
+    //board_to_screen{(0,0}) = > {0,300}
+    std::cout << "bourd_to_screen{(0,0})" << h_view.board_to_screen{(0,0}).x<<" , " <<h_view.board_to_screen{(0,0}).y;
+    ge211::Position board_to_screen(ge211::Position) const;
+
+    /// Converts a physical screen position to a logical board position.
+    ge211::Position screen_to_board(ge211::Position) const;
+
 }
 
 TEST_CASE("Check that game rules enforced")

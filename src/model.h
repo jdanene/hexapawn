@@ -56,17 +56,22 @@ namespace hexapawn {
         bool bounds_check(ge211::Position) const;
 
         /// Returns the winner of game is there is one
-        const Player& game_over() const { return m_winner; };
+        const Player& game_winner() const { return m_winner; };
+
+         /// Returns the winner of game is there is one
+         bool game_over_p() const { return (Player::neither == m_turn) ; };
+
 
         /********************* (Invariant 1) Player Wins/Game Over Invariant ***********************
          *  game_over[1] - If a player has no valid moves then that player loses and the other player wins
          *  game_over[2] - If both players have no moves then neither player win
          *  game_over[3]- If a player gets a pawn to the other side then that player wins
          *******************************************************************************************/
-        // FixMe: Switch to private at submit
+    private:
         /// Returns true if there is at-least one feasible move for the pawn `p` located at `pos`
         // Aux function for `update_winner_and_turn`, helps enforce (Invariant 1)::game_over[1] && (Invariant 1)::game_over[2]
         bool feasible_moves_p(ge211::Position pos, Player p) const;
+    public:
         /**************** (Invariant 2) Player Turn Invariant ***************************************
          * - If the game is not over
          *      -Then after a player enacts a valid pawn move then it is the other players turn.
@@ -86,12 +91,12 @@ namespace hexapawn {
          * Invalid Pawn moves
          *      - All moves not specified as valid.
          * ********************************************************************************************/
-        //FixMe: Switch this back before you submit
+    private:
         /// Returns true if a move is viable for a specified player.
         //  Aux function for `is_viable_p`
         bool player_move_goodp(ge211::Position old_pos, ge211::Position new_pos,Player whose_turn,\
         int (*pm)(int, int)) const;
-
+    public:
         /// Is the move from old_pos => new_pos viable or not?
         // Checks the conditions of (Invariant 3)
         bool is_viable_p(ge211::Position old_pos, ge211::Position new_pos, Player whose_turn) const;

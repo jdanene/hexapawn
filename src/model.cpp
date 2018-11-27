@@ -24,9 +24,9 @@ namespace hexapawn {
         std::vector<Player> blank_row(m_width,Player::neither);
 
         for (int row_no = 0; row_no < m_height; ++row_no) {
-            if (row_no == m_height - 1){
+            if (row_no == 0){
                 m_board.emplace_back(p1_row);
-            }else if (row_no == 0){
+            }else if (row_no == m_height - 1){
                 m_board.emplace_back(p2_row);
             }else{
                 m_board.emplace_back(blank_row);
@@ -49,8 +49,8 @@ namespace hexapawn {
 
         /*******************************************************************************
          * viable_row: the row that is one row forward of `old_pos.y`
-         *      - If first player: viable_row = old_row_no - 1.
-         *      - If second player: viable_row = old_row_no + 1.
+         *      - If first player: viable_row = old_row_no + 1.
+         *      - If second player: viable_row = old_row_no - 1.
          *      - In general: viable_row = pm(old_row_no,1)
          *          - `pm` is either 'add' or 'sub' depending on player.
          * left_kill:  the pawn that is one square diagonally to the left of `old_pos`
@@ -61,9 +61,7 @@ namespace hexapawn {
         Position left_kill = {old_col_no - 1, viable_row};
         Position right_kill = {old_col_no + 1, viable_row};
         Position no_kill = {old_col_no, viable_row};
-        Player player_at_left = get_ele(left_kill);
-        Player player_at_right = get_ele(right_kill);
-        Player player_at_no_kill = get_ele(no_kill);
+
 
         /********************** Enforcing Pawn Move (Invariant 3) *********************
          * - old_pos => `left_kill` iff there is an enemy pawn at `left_kill`
@@ -79,18 +77,17 @@ namespace hexapawn {
         //      - Since the first player starts from the bottom of our grid [aka row =height() - 1]
         // - If second player: then the last row is height() - 1.
         //      - Since the second player starts from the top of our grid [aka row =0]
-        int last_row = (whose_turn == Player::first) ? 0 : height() - 1;
+        int last_row = (whose_turn == Player::first) ? height() - 1 : 0;
         if (old_row_no == last_row) return false; // Can't move if at the other side of grid
+
 
         //The more general case
         if ((new_col_no == left_kill.x) && (new_row_no == left_kill.y)) {
-            if (old_col_no == 0) return false; //Can't move left from a pawn that is all the way at the left
-            return (player_at_left == enemy_player); //Can only perform a kill move if enemy pawn is at `left_kill`
+            return (bounds_check(left_kill)) ? (get_ele(left_kill) == enemy_player): false ; //Can only perform a kill move if enemy pawn is at `left_kill`
         } else if ((new_col_no == right_kill.x) && (new_row_no == right_kill.y)) {
-            if (old_col_no == width() - 1) return false; //Can't move right from a pawn that is all the way to  the right
-            return (player_at_right == enemy_player);//Can only perform a kill move if enemy pawn is at `right_kill`
+            return (bounds_check(right_kill)) ? (get_ele(right_kill) == enemy_player): false ;//Can only perform a kill move if enemy pawn is at `right_kill`
         } else if ((new_col_no == no_kill.x) && (new_row_no == no_kill.y)){
-            return (player_at_no_kill == Player::neither); //Only move forward if no pawn is at position
+            return (bounds_check(no_kill)) ? (get_ele(no_kill) == Player::neither): false ; //Only move forward if no pawn is at position
         }else{
             return false;
         }
@@ -102,22 +99,22 @@ namespace hexapawn {
         if (!bounds_check(old_pos) or !bounds_check(new_pos)) return false;
         switch (whose_turn) {
             case Player::first:
-                return player_move_goodp(old_pos,new_pos,whose_turn,sub);
-            case Player::second:
                 return player_move_goodp(old_pos,new_pos,whose_turn,add);
+            case Player::second:
+                return player_move_goodp(old_pos,new_pos,whose_turn,sub);
             default:
                 throw ge211::Client_logic_error("is_viable_p: not a player");
         }
     }
 
     bool Model::bounds_check(ge211::Position pos) const {
-        return ((0 <= pos.y < height()) && (0 <= pos.x < width()));
+        return (((0 <= pos.y) && (pos.y < height())) && ((0 <= pos.x) && (pos.x < width())));
     }
 
     const Player& Model::get_ele(ge211::Position pos) const
     {
         if  (bounds_check(pos)) return m_board[pos.y][pos.x];
-        else throw ge211::Client_logic_error("get_ele: element out of bounds");
+        else throw ge211::Client_logic_error("get_ele: element out of bounds at pos {"+std::to_string(pos.y)+","+std::to_string(pos.x)+"}");
     }
 
     bool Model::pawn_there_p(ge211::Position pos) const
@@ -127,7 +124,7 @@ namespace hexapawn {
 
     bool Model::feasible_moves_p(ge211::Position pos, Player p) const
     {
-        int new_y = (Player::first == p) ? pos.y-1 : pos.y+1;
+        int new_y = (Player::first == p) ? pos.y+1 : pos.y-1;
         ge211::Position up_move =  {pos.x,new_y};
         ge211::Position left_move = {pos.x-1,new_y};
         ge211::Position right_move = {pos.x+1,new_y};
@@ -152,14 +149,14 @@ namespace hexapawn {
                 if (player == Player::first){
                     p1_hasmoves_p = (feasible_moves_p(pos,player) or p1_hasmoves_p);
                     // Check if first player has reached the other side
-                    if (row_no == 0){
+                    if (row_no == height()-1){
                         p1_wins = true;
                         break;}
                 }
                 else if (player == Player::second){
                     p2_hasmoves_p = (feasible_moves_p(pos,player) or p2_hasmoves_p);
                     // Check if second player has reached the other side
-                    if (row_no == height()-1){
+                    if  (row_no == 0) {
                         p2_wins = true;
                         break; }
                 }
@@ -180,7 +177,6 @@ namespace hexapawn {
             m_winner = Player::first;
             m_turn = Player::neither;}
         else if (!p1_hasmoves_p  && !p2_hasmoves_p) {
-            // FixMe: No idea why this is saying the condition is always true
             m_winner = Player::neither;
             m_turn = Player::neither;}
         // A player has yet to win and so the game can continue => next player turn
