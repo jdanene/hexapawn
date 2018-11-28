@@ -34,10 +34,10 @@
   - line 266: `TEST_CASE("Pawn on other side: white winner")`
     - Checks that sequence of game moves that end in a white being the winner when white pawn reaches the other side is correct
     - Game Play Check
-  - line 336: `TEST_CASE("No Moves: Black winner")`
+  - line 336: `TEST_CASE("No Moves for white: Black winner")`
     - Checks that sequence of game moves that end in a black being the winner when white has no viable moves is correct
     - Game Play Check
-  - line 405: `TEST_CASE("No Moves: White winner")`
+  - line 405: `TEST_CASE("No Moves for black: White winner")`
     - Checks that sequence of game moves that end in a white being the winner when black has no viable moves is correct
     - Game Play Check
   
