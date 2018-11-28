@@ -1,82 +1,51 @@
-# IPD Homework 7: Hexapawn
+  ## Ensuring correctness 
+  - line 10: `TEST_CASE("Make a hexa")`
+    - Check that the dimensions are correct and correct player has turn 
+    - Initialization check
+  - line 18: `TEST_CASE("Is a viable move?")`
+    - Check if different moves are viable according to rules of the game
+    - Specifically test function `hexapawn.is_viable_p`
+    - Initialization check
+  - line 29: `TEST_CASE("Is a pawn there?")`
+    - Check if the pawns are where they are suppose to be for base 3x3 board
+    - Specifically test function `hexapawn.pawn_there_p`
+    - Initialization check
+  - line 37: `TEST_CASE("Is there a pawn in chessboard 4x4?")`
+    - Ensure correct for different size board
+    - Repeats previous test for 4x4 board
+     - Initialization check
+  - line 46: `TEST_CASE("Is there a pawn in chessboard 8x7?")`
+    - Ensure correct for different size board
+    - Repeats previous test for 8x7 board
+    - Initialization check
+  - line 55: `TEST_CASE("Is there a pawn in chessboard 3x6?")`
+    - Ensure correct for different size board
+    - Repeats previous test for 3x6 board
+     - Initialization check
+  - line 65: `TEST_CASE("Check pawns in chessboard")`
+    - Checks if pawn in chessboard
+    - Initialization check
+  - line 74: `TEST_CASE("Game over: draw")`
+    - Checks that sequence of game moves that end in a draw is correct
+    - Game Play Check 
+  - line 117: `TEST_CASE("Pawn on other side: black winner")`
+    - Checks that sequence of game moves that end in a black being the winner when blacks pawn reaches the other side is correct
+    - Game Play Check
+  - line 266: `TEST_CASE("Pawn on other side: white winner")`
+    - Checks that sequence of game moves that end in a white being the winner when white pawn reaches the other side is correct
+    - Game Play Check
+  - line 336: `TEST_CASE("No Moves: Black winner")`
+    - Checks that sequence of game moves that end in a black being the winner when white has no viable moves is correct
+    - Game Play Check
+  - line 405: `TEST_CASE("No Moves: White winner")`
+    - Checks that sequence of game moves that end in a white being the winner when black has no viable moves is correct
+    - Game Play Check
+  
+  
+  
 
-  - **Due: Tuesday, November 27 at 11:59 PM**
-
-## Summary
-
-For this homework, you will write an interactive program implementing
-the two-player abstract strategy game
-[Hexapawn](https://en.wikipedia.org/wiki/Hexapawn).
-
-## Goals
-
-To design a whole program from scratch, while maintaining good style and
-logical factoring.
-
-## Specification
-
-The rules of Hexapawn are available in [the Hexapawn Wikipedia
-article](https://en.wikipedia.org/wiki/Hexapawn), and your program
-should implement these rules.
-
-Unlike traditional 3×3 Hexapawn, your game should support board
-dimensions from 3×3 to 8×8. Changing a dimension should be as easy as
-changing a constant (or you can integrate dimension selection into your
-UI).
-
-You must implement a graphical user interface, using the [`ge211`]
-library. At each turn, your game should display the state of the board
-and somehow indicate which player’s turn it is. (I’ve indicated that
-below by rotating the board so that the player who is moving is at the
-bottom, moving up; you could indicate it another way, though.) The UI
-should then allow the player to select a move. Here is an example of
-what that display might look like (approximated textually) for a 5×3
-game, when it is the player B’s turn:
-
-`ge211`: https://tov.github.io/ge211/
-
-````
-+---+---+---+---+---+
-| W |   | W | W | W |
-+---+---+---+---+---+
-|   | W |   |   |   |
-+---+---+---+---+---+
-| B | B | B | B | B |
-+---+---+---+---+---+
-````
-
-At this point, the player B can move by first clicking which piece
-to move, and then clicking where to move it to.
-
-When a player wins, either by reaching the other side or leaving the
-other player with no available moves, a messages to this effect should
-be displayed, and it should not be possible to make further moves.
-
-## Deliverables
-
-Your deliverables are:
-
-  - The source code of the `hexapawn` program as described
-    above.
-
-  - Automated tests for your model. (You do not needs tests for the
-    view and controller.)
-
-  - A plain text file `EVALUATION.md` (which can use
-    [Markdown](https://help.github.com/articles/github-flavored-markdown/)
-    formatting if you like) in which you describe the design of your
-    program. In particular please discuss, briefly:
-
-      - how you tested your programs to ensure correctness and
-
-      - anything that surprised you while doing this assignment.
-
-    When discussing your code, please provide file and line number
-    references.
-
-## How to submit
-
-Please submit a ZIP or TAR archive of your whole project. Your project
-should build in CLion using the configuration in CMakeLists.txt. Before
-creating the archive, be sure to clean your project (*Run* menu /
-*Clean*).
+  ## Anything that surprised you while doing this assignment.
+  - The board is flipped upside down
+  - Random errors in GE:211 when assigning sprites
+  - The amount of test cases. 
+      - Have to really understand logic of game to get the test cases that we want. 
