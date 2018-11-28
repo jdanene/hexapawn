@@ -39,7 +39,6 @@ namespace hexapawn {
 
     void Controller::on_mouse_down(Mouse_button btn, Position screen_posn)
     {
-        // Basically this clause happens if the game is over
         if (m_model.game_over_p()) return;
 
         // The left mouse button corresponds to the mouse pad.
@@ -64,9 +63,7 @@ namespace hexapawn {
 
     void Controller::on_mouse_up(Mouse_button btn, Position screen_posn)
     {
-        // Basically this clause happens if the game is over
         if (m_model.get_turn() == Player::neither) return;
-        // The left mouse button corresponds to the mouse pad.
         if (btn != Mouse_button::left) return;
 
         Position board_pos = m_view.screen_to_board(screen_posn);

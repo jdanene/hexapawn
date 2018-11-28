@@ -71,15 +71,9 @@ namespace hexapawn {
          *      - Interpretation: move pawn one square forward
          * - All other pawn moves are NOT VIABLE!
          * *************************************************************/
-        // last_row:
-        // - If first player: then the last row is 0.
-        //      - Since the first player starts from the bottom of our grid [aka row =height() - 1]
-        // - If second player: then the last row is height() - 1.
-        //      - Since the second player starts from the top of our grid [aka row =0]
+         // Edge case
         int last_row = (whose_turn == Player::first) ? height() - 1 : 0;
         if (old_row_no == last_row) return false; // Can't move if at the other side of grid
-
-
         //The more general case
         if ((new_col_no == left_kill.x) && (new_row_no == left_kill.y)) {
             return (bounds_check(left_kill)) ? (get_ele(left_kill) == enemy_player): false ; //Can only perform a kill move if enemy pawn is at `left_kill`

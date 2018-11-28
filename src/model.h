@@ -15,7 +15,7 @@ namespace hexapawn {
     };
 
     // as_integer: enumeration -> number
-    // So we can test the underlying int value of our Player enumeration class
+    // So we can turn player enumeration class to integer whenever we want to
     template <typename Enumeration>
     auto as_integer(Enumeration const value)
     -> typename std::underlying_type<Enumeration>::type

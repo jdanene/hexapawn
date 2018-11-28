@@ -34,6 +34,9 @@ namespace hexapawn {
         /// Renders the current state of the model.
         void draw(ge211::Sprite_set&, ge211::Position, PawnSelect) const;
 
+        /// Renders the the game over window
+        void drawGameOver(ge211::Sprite_set&) const;
+
         /// The actual screen dimensions of the required game window.
         ge211::Dimensions screen_dimensions() const;
 
@@ -43,8 +46,7 @@ namespace hexapawn {
         /// Converts a physical screen position to a logical board position.
         ge211::Position screen_to_board(ge211::Position) const;
 
-        //Todo: Add code that displays "Game Over"+str(winner) when the game is over.
-        void drawGameOver(ge211::Sprite_set&) const;
+
 
 
     private:
@@ -62,7 +64,7 @@ namespace hexapawn {
         /// Vector that holds the two background images used to create a checkered board
         std::vector<ge211::Rectangle_sprite> const m_background_vec{m_ivory_square,m_brown_square};
 
-        /// Font
+        /// Font for game over sprite.
         ge211::Font sans{"sans.ttf", 27};
 
         /// Game over sprites.
@@ -84,11 +86,12 @@ namespace hexapawn {
                         .color(ge211::Color::white())
                         .build();
 
+        /// Vector of the game-over text sprites
         std::vector<ge211::Text_sprite> const m_gameover_vec{p1wins,p2wins,statemate};
 
 
 
     };
 
-} // end namespace connect4
+} // end namespace hexapawn
 

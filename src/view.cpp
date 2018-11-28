@@ -1,5 +1,4 @@
 #include "view.h"
-#include <iostream>
 
 namespace hexapawn {
 
@@ -14,7 +13,8 @@ namespace hexapawn {
         auto len = m_background_vec.size();
         int idx = -1;
         Player current_player = m_model.get_turn();
-        //If m_model.height() or m_model.height()  are even then we are in the special case.
+
+        //Various cases to ensure the checkered board renders properly.
         bool special_case_checkered ;
         if ((m_model.height()%2 == 1) && (m_model.width()%2 == 1)){
             special_case_checkered = false;
@@ -28,11 +28,10 @@ namespace hexapawn {
 
         Player winner = m_model.game_winner();
 
-        // Put the game over sprite in the `left corner` of the board
+        // Put the game-over sprite in the `left corner` of the board
         sprites.add_sprite(m_gameover_vec[as_integer(winner)], board_to_screen({0 ,m_model.height()-1}), 3);
 
         // Adding pawns to board and make the board checkered.
-        // Differentiate opaqueness so that players know whose turn it is.
         for (int row_no = 0; row_no < m_model.height(); ++row_no) {
             if ((special_case_checkered) && (row_no%2 == 1)){
                 ++idx;
@@ -41,7 +40,6 @@ namespace hexapawn {
             }
             for (int col_no = 0; col_no < m_model.width(); ++col_no) {
                 Player player = m_model.get_ele({col_no,row_no});
-                // We treat Player::neither as empty space
                 if (Player::neither != player) {
                         if (player == Player::first) {
                             auto const &sprite =
@@ -113,12 +111,7 @@ namespace hexapawn {
                         }
                     }
                 }
-                // Add ivory and brown squares to the board to make it checkered.
-                // Using modulo so every other turn we add:
-                // m_ivory_square => m_brown_square => m_ivory_square => m_brown_square ...
-
-                //std::cout << "Curr idx Player turn is: "<< idx%len << "\n";
-                //std::cout << "Curr x,y Player turn is: "<< col_no <<","<< row_no <<"\n";
+                // Using modulo so every other turn we add: different colored square
                 ++idx;
                 sprites.add_sprite(m_background_vec.at(idx%len), board_to_screen({col_no, row_no}), 0);
             }
@@ -139,8 +132,6 @@ namespace hexapawn {
     {
         int x = 2 * pawn_radius * board_pos.x;
         int y = 2 * pawn_radius * (m_model.height() - board_pos.y - 1);
-        //std::cout << "board_to_screen()"<<"{" <<board_pos.x << ","<< board_pos.y <<"}" << "\n";
-        //std::cout << "board_to_screen()"<<"{" <<x << ","<< y <<"}" << "\n";
         return {x, y};
     }
 
@@ -148,8 +139,6 @@ namespace hexapawn {
     {
         int col_no = screen_pos.x / (2 * pawn_radius);
         int row_no = m_model.height() - screen_pos.y / (2 * pawn_radius) - 1;
-        //std::cout << "screen_to_board()"<<"{" <<screen_pos.x << ","<< screen_pos.y <<"}" << "\n";
-        //std::cout << "board_to_screen()"<<"{" <<col_no << ","<< row_no <<"}" << "\n";
         return {col_no, row_no};
     }
 

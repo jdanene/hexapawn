@@ -1,10 +1,10 @@
 #include "controller.h"
-#include <iostream>
+
 int main()
 {
 
     {
-        hexapawn::Controller(3,3).run();
+        hexapawn::Controller(4,4).run();
 
     }
 }
