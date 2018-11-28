@@ -41,7 +41,6 @@ namespace hexapawn {
         int height() const {return m_height; }
         const Player& get_ele(ge211::Position) const; //Gets a view of a given element
         const Player& get_turn() const { return m_turn; }; // Returns whose turn it is, or Player::neither if game over.
-        //ToDo: If we decide to include text that indicates game is over + winner, then use this function
         const Player& game_winner() const { return m_winner; }; // Returns the winner of game is there is one
 
         /// Checks if there is a pawn at the position.

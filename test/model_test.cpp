@@ -5,142 +5,14 @@
 #include <iostream>
 
 using namespace hexapawn;
-TEST_CASE("Check that defaults are correct")
-{
-    Model hexapawn(5,8);
-    CHECK( hexapawn.width() == 5);
-    CHECK( hexapawn.height() == 8 );
-    CHECK( hexapawn.get_turn() == Player::first);
-    //std::cout<< (connect_four.get_ele({0,0}) == Player::first)? 0 : 1;
-    //std::cout<< (connect_four.get_ele({4,0}) == Player::first)? 0 : 1;
-
+TEST_CASE("Check that defaults are correct") {
+    Model hexapawn(8, 8);
+    
     //Ensure that the bottom row corresponds to P1 and top row to P2
-    CHECK(((hexapawn.get_ele({0,0}) == Player::second) && (hexapawn.get_ele({4,0}) == Player::second)));
-    CHECK(((hexapawn.get_ele({0,7}) == Player::first) && (hexapawn.get_ele({4,7}) == Player::first)));
-    //Ensure that the middle row correspond to Player:: Neither
-    CHECK(((hexapawn.get_ele({0,1}) == Player::neither) && (hexapawn.get_ele({4,1}) == Player::neither)));
-    CHECK(((hexapawn.get_ele({0,6}) == Player::neither) && (hexapawn.get_ele({4,6}) == Player::neither)));
+    CHECK(hexapawn.get_ele({0, 0}) == Player::second);
 }
 
-TEST_CASE("Test view")
-{
-    Controller hexapawn(3,3);
-    View h_view(hexapawn);
-    /// Converts a logical board position to a physical screen position.
-    //board_to_screen{(0,0}) = > {0,300}
-    std::cout << "bourd_to_screen{(0,0})" << h_view.board_to_screen{(0,0}).x<<" , " <<h_view.board_to_screen{(0,0}).y;
-    ge211::Position board_to_screen(ge211::Position) const;
 
-    /// Converts a physical screen position to a logical board position.
-    ge211::Position screen_to_board(ge211::Position) const;
-
-}
-
-TEST_CASE("Check that game rules enforced")
-{
-    Model hexapawn(3,3);
-    /* Below is the logical board that we will test: PLAYER1
-     *         0   1   2
-     *
-     *     0  | B| B | B |
-     *     1  | -| w | - |
-     *     2  | w| - | w |
-     *   PLAYER1: {1,2} => {1,1}
-     * */
-
-    /// P1: {1,2} => {1,1}
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-    std::cout << "Element {1,2} is: "<< as_integer(hexapawn.get_ele({1,2})) << "\n";
-    std::cout << "Viable? {1,2} =>  {1,1} is: "<< hexapawn.is_viable_p({1,2},{1,1},hexapawn.get_turn())<< "\n";
-    hexapawn.place_pawn({1,2},{1,1});
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-    std::cout << "Element {1,2} is: "<< as_integer(hexapawn.get_ele({2,1})) << "\n";
-
-
-    /* Below is the logical board that we will test
-     *         0   1   2
-     *
-     *     0  | -| B | B |
-     *     1  | -| B | - |
-     *     2  | w| - | w |
-     * PLAYER2: {0,0} => {1,1}
-     */
-        /// [Update Turn: P1 => P2] AND [Check if winner: No winner => No winner]
-        hexapawn.update_winner_and_turn();
-        std::cout << "New Player turn is: "<< as_integer(hexapawn.get_turn()) << "\n";
-        std::cout << "Game over? : "<< as_integer(hexapawn.game_over()) << "\n";
-        std::cout << "Element {0,0} is: "<< as_integer(hexapawn.get_ele({0,0})) << "\n";
-        std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-        hexapawn.place_pawn({0,0},{1,1});
-        std::cout << "Element {0,0} is: "<< as_integer(hexapawn.get_ele({0,0})) << "\n";
-        std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-
-    /* Below is the logical board that we will test: PLAYER1
-     *         0   1   2
-     *
-     *     0  | -| B | B |
-     *     1  | -| w | - |
-     *     2  | w| - | - |
-     *  Player1: {2,2} => {1,1}
-     *****/
-
-    hexapawn.update_winner_and_turn();
-    std::cout << "New Player turn is: "<< as_integer(hexapawn.get_turn()) << "\n";
-    std::cout << "Game over? : "<< as_integer(hexapawn.game_over()) << "\n";
-    std::cout << "Element {2,2} is: "<< as_integer(hexapawn.get_ele({2,2})) << "\n";
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-    hexapawn.place_pawn({2,2},{1,1});
-    std::cout << "Element {2,2} is: "<< as_integer(hexapawn.get_ele({2,2})) << "\n";
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-
-
-    /* Below is the logical board that we will test:
-     *         0   1   2
-     *
-     *     0  | -| B | - |
-     *     1  | -| B | - |
-     *     2  | w| - | - |
-     *  - Player 2: {2,0}=> {1,1}
-     *****/
-
-    hexapawn.update_winner_and_turn();
-    std::cout << "New Player turn is: "<< as_integer(hexapawn.get_turn()) << "\n";
-    std::cout << "Game over? : "<< as_integer(hexapawn.game_over()) << "\n";
-    std::cout << "Element {2,0} is: "<< as_integer(hexapawn.get_ele({2,0})) << "\n";
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-    hexapawn.place_pawn({2,0},{1,1});
-    std::cout << "Element {2,0} is: "<< as_integer(hexapawn.get_ele({2,0})) << "\n";
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-
-
-    /* Below is the logical board that we will test:
-     *         0   1   2
-     *
-     *     0  | -| B | - |
-     *     1  | -| w | - |
-     *     2  | -| - | - |
-     *  - Player 1: {0,2}=> {1,1}
-     *  - Draw
-     *****/
-
-    hexapawn.update_winner_and_turn();
-    std::cout << "New Player turn is: "<< as_integer(hexapawn.get_turn()) << "\n";
-    std::cout << "Game over? : "<< as_integer(hexapawn.game_over()) << "\n";
-    std::cout << "Element {0,2} is: "<< as_integer(hexapawn.get_ele({0,2})) << "\n";
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-    hexapawn.place_pawn({0,2},{1,1});
-    std::cout << "Element {0,2} is: "<< as_integer(hexapawn.get_ele({0,2})) << "\n";
-    std::cout << "Element {1,1} is: "<< as_integer(hexapawn.get_ele({1,1})) << "\n";
-
-    std::cout << "New Player turn is: "<< as_integer(hexapawn.get_turn()) << "\n";
-    std::cout << "Game over? : "<< as_integer(hexapawn.game_over()) << "\n";
-    //End in a draw good!
-    hexapawn.update_winner_and_turn();
-    std::cout << "New Player turn is: "<< as_integer(hexapawn.get_turn()) << "\n";
-    std::cout << "Game over? : "<< as_integer(hexapawn.game_over()) << "\n";
-
-
-}
 
 
 // Correct turn?

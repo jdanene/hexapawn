@@ -47,6 +47,7 @@ CMakeFiles/model_test.dir/test/model_test.cpp.o: ../.ipd/lib/ge211/src/ge211_tim
 CMakeFiles/model_test.dir/test/model_test.cpp.o: ../.ipd/lib/ge211/src/ge211_util.h
 CMakeFiles/model_test.dir/test/model_test.cpp.o: ../.ipd/lib/ge211/src/ge211_window.h
 CMakeFiles/model_test.dir/test/model_test.cpp.o: ../src/model.h
+CMakeFiles/model_test.dir/test/model_test.cpp.o: ../src/view.h
 CMakeFiles/model_test.dir/test/model_test.cpp.o: /Library/Frameworks/SDL2.framework/Headers/SDL_config.h
 CMakeFiles/model_test.dir/test/model_test.cpp.o: /Library/Frameworks/SDL2.framework/Headers/SDL_config_macosx.h
 CMakeFiles/model_test.dir/test/model_test.cpp.o: /Library/Frameworks/SDL2.framework/Headers/SDL_endian.h

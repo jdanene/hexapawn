@@ -1,5 +1,5 @@
 #include "view.h"
-
+#include <iostream>
 
 namespace hexapawn {
 
@@ -57,7 +57,17 @@ namespace hexapawn {
         int idx = -1;
         Player current_player = m_model.get_turn();
         //If m_model.height() or m_model.height()  are even then we are in the special case.
-        bool special_case_checkered = (not ((m_model.height()%2 == 1) && (m_model.height()%2 == 1))) ? true : false;
+        //enum special_cases {normal, special1, special2};
+        bool special_case_checkered ;
+        if ((m_model.height()%2 == 1) && (m_model.width()%2 == 1)){
+            special_case_checkered = false;
+        }
+        else if  ((m_model.width()%2 == 1) && (m_model.height()%2 == 0)){
+            special_case_checkered = false;
+        }
+        else{
+            special_case_checkered = true;
+        }
 
 
         //FixMe: Code is especially clunky to get around errors from ge211
