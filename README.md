@@ -44,8 +44,3 @@
   
   
 
-  ## Anything that surprised you while doing this assignment.
-  - The board is flipped upside down
-  - Random errors in GE:211 when assigning sprites
-  - The amount of test cases. 
-      - Have to really understand logic of game to get the test cases that we want. 
